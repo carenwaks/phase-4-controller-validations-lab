@@ -8,8 +8,11 @@ class AuthorsController < ApplicationController
 
   def create
     author = Author.create(author_params)
-
-    render json: author, status: :created
+    if author.save
+      render json: author, status: :created
+    else
+      render json: { errors: author.errors }, status: 422
+    end
   end
 
   private
